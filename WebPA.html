@@ -3,10 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>フォーム送信テスト</title>
+    <script src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
 </head>
 <body>
     <h1>入力フォーム</h1>
     <form id="myForm">
+        <label>バーコードをスキャン：</label><br>
+        <video id="video" width="360" height="260" style="border:1px solid black;"></video><br>
+        <input type="text" id="barcode" readonly><br><br>
+
+        <button id="startScan" type="button">スキャン開始</button><br><br>
+
         <label for="name">名前：</label><br>
         <input type="text" id="name" name="name"><br><br>
 
@@ -17,13 +24,28 @@
     </form>
 
     <script>
+        const codeReader = new ZXing.BrowserMultiFormatReader();
+
+        document.getElementById('startScan').addEventListener('click', () => {
+        const videoElement = document.getElementById('video');
+        const resultElement = document.getElementById('barcode');
+
+        codeReader.decodeFromVideoDevice(null, videoElement, (result, err) => {
+                if (result) {
+                 resultElement.value = result.getText();
+                 codeReader.reset();
+                }
+            });
+        });
+
         document.getElementById('myForm').addEventListener('submit', function(e) 
         {
             e.preventDefault();
 
             const data = {
                 name: document.getElementById('name').value,
-                email: document.getElementById('email').value
+                email: document.getElementById('email').value,
+                JANCode: document.getElementById('barcode').value
             };
 
             fetch('https://prod-24.japaneast.logic.azure.com:443/workflows/b55f4ea8c2694f989eaac8479b5f5c71/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wCJvp7RN0v5O1mfDJ1yo6CqSdHryzLhkIOIO4H1Vjvw', {
