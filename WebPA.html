@@ -25,7 +25,7 @@
     </form>
 
     <!-- ボタンの衝突を防ぐためにform外へ -->
-    <button type="button" onclick="GenerateFormsURL()">FormsURL 自動作成 ver1.0</button><br>
+    <button type="button" onclick="GenerateFormsURL()">FormsURL 自動作成 ver1.1</button><br>
     <input type="text" id="FormURL" readonly><br>
 
     <script>
@@ -56,14 +56,14 @@
                 return;
             }
 
-            const BaseuRL = "https://forms.office.com/Pages/ResponsePage.aspx?id=OEtMPzPYtUem4Ic11TlGaIfYkjmu2fFBotYoTh_Pz2JURUMyQjJHMks1Nk5RTEFCVVNLTVhMS1FHVS4u";
+            const BaseURL = "https://forms.office.com/Pages/ResponsePage.aspx?id=OEtMPzPYtUem4Ic11TlGaIfYkjmu2fFBotYoTh_Pz2JURUMyQjJHMks1Nk5RTEFCVVNLTVhMS1FHVS4u";
             const QuestionId = "rcb527b911d8541b6bd298ba5d0438b68";
-            const jsonValue = JSON.stringify([JanCode]);
-            const encoded = encodeURIComponent(jsonValue);
+            const JsonValue = JSON.stringify([JanCode]);
+            const Encoded = encodeURIComponent(JsonValue);
 
-            const fullurl = `${baseURL}&${questionId}=${encoded}`;
+            const FullURL = `${BaseURL}&${QuestionId}=${Encoded}`;
 
-            document.getElementById('FormURL').value = fullurl;
+            document.getElementById('FormURL').value = FullURL;
         }
 
         // Power Automate 連携
