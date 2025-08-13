@@ -10,6 +10,7 @@
     <form id="myForm">
         <label>バーコードをスキャン：</label><br>
         <video id="video" width="360" height="260" style="border:1px solid black;"></video><br>
+        <label for="barcode">検出したJANコード：</label><br>
         <input type="text" id="barcode" readonly><br><br>
 
         <button id="startScan" type="button">スキャン開始</button><br><br>
@@ -17,13 +18,20 @@
         <label for="name">名前：</label><br>
         <input type="text" id="name" name="name"><br><br>
 
-        <label for="email">メール：</label><br>
+        <label for="email">メールアドレス：</label><br>
         <input type="email" id="email" name="email"><br><br>
 
-        <button type="submit">送信</button>
+        <button type="submit">送信</button><br><br>
+
+        <input type="text" id="FormURL" readonly><br>
     </form>
 
+    <!-- ボタンの衝突を防ぐためにform外へ -->
+    <button type="button" onclick="GenerateFormsURL()">FormsURL 自動作成</button>
+
     <script>
+
+        // カメラ起動 バーコード読み取り
         const codeReader = new ZXing.BrowserMultiFormatReader();
 
         document.getElementById('startScan').addEventListener('click', () => {
@@ -38,6 +46,28 @@
             });
         });
 
+        // 事前入力済みFormsURL自動生成
+        function GenerateFormsURL(){
+            
+            const JanCode = document.getElementById('Barcode').value.trim();
+
+            // JANコード NULLチェック
+            if (!JanCode){
+                alert("JANコードが空です");
+                return;
+            }
+
+            const BaseuRL = "https://forms.office.com/Pages/ResponsePage.aspx?id=OEtMPzPYtUem4Ic11TlGaIfYkjmu2fFBotYoTh_Pz2JURUMyQjJHMks1Nk5RTEFCVVNLTVhMS1FHVS4u";
+            const QuestionId = "rcb527b911d8541b6bd298ba5d0438b68";
+            const jsonValue = JSON.stringify([JanCode]);
+            const encoded = encodeURIComponent(jsonValue);
+
+            const fullurl = `${baseURL}&${questionId}=${encoded}`;
+
+            document.getElementById('FormURL').value = fullurl;
+        }
+
+        // Power Automate 連携
         document.getElementById('myForm').addEventListener('submit', function(e) 
         {
             e.preventDefault();
