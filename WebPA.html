@@ -52,7 +52,7 @@
 
             // JANコード NULLチェック
             if (!JanCode){
-                alert("JANコードが空です");
+                document.getElementById('FormURL').value = "読み取ったJANコードが空です";
                 return;
             }
 
