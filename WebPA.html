@@ -21,11 +21,11 @@
         <label for="email">メールアドレス：</label><br>
         <input type="email" id="email" name="email"><br><br>
 
-        <button type="submit">送信</button><br><br>
+        <!-- <button type="submit">送信</button><br><br> -->
     </form>
 
     <!-- ボタンの衝突を防ぐためにform外へ -->
-    <button type="button" onclick="GenerateFormsURL()">FormsURL 自動作成 ver1.1</button><br>
+    <button type="button" onclick="GenerateFormsURL()">FormsURL 自動作成</button><br>
     <input type="text" id="FormURL" readonly><br>
 
     <script>
@@ -52,7 +52,7 @@
 
             // JANコード NULLチェック
             if (!JanCode){
-                document.getElementById('FormURL').value = "読み取ったJANコードが空です";
+                document.getElementById('FormURL').value = "JANコードが空です";
                 return;
             }
 
