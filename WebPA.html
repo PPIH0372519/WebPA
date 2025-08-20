@@ -44,7 +44,8 @@
                     // 事前入力済みのForms URLを作成
                     const FullURL = `${BaseURL}&${QuestionId}=${Encoded}`;
 
-                    window.open(FullURL);
+                    // 作成URL 遷移
+                    window.location.href = FullURL;
                 }
             });
         });
