@@ -9,10 +9,10 @@
     <h1>入力フォーム</h1>
     <form id="myForm">
         <label>バーコードをスキャン：</label><br>
-        <video id="video" width="360" height="260" style="border:1px solid black;"></video><br>
+        <video id="video" width="360" height="260" style="border:1px solid black;"></video><br>        
+        <label for="barcode">検出したJANコード：</label><br>
+        <input type="text" id="barcode" readonly><br><br>
         <label>スキャン後に自動でFormsに遷移します</label><br>
-        <!-- <label for="barcode">検出したJANコード：</label><br>
-        <input type="text" id="barcode" readonly><br><br> -->
 
         <button id="startScan" type="button">スキャン/Forms遷移</button><br><br>
 
@@ -27,6 +27,8 @@
         // カメラ起動 バーコード読み取り
         const codeReader = new ZXing.BrowserMultiFormatReader();
 
+        // startScanクリック時のイベント
+        // バーコード読み取り、事前入力済みのFormsURLを作成して遷移する
         document.getElementById('startScan').addEventListener('click', () => {
         const videoElement = document.getElementById('video');
         const resultElement = document.getElementById('barcode');
@@ -46,7 +48,7 @@
                     const FullURL = `${BaseURL}&${QuestionId}=${Encoded}`;
 
                     // 作成URL 遷移
-                    window.location.href = FullURL;
+                    window.location = FullURL;
                 }
             });
         });
