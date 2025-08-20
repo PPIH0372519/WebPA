@@ -21,18 +21,12 @@
         <video id="video" width="360" height="260" style="border:1px solid black;"></video><br>        
         <label for="barcode">検出したJANコード：</label><br>
         <input type="text" id="barcode" readonly><br><br>
+
         <label>スキャン後に自動でFormsに遷移します</label><br>
-
         <button id="startScan" type="button">スキャン/Forms遷移</button><br><br>
-
     </form>
 
-    <!-- ボタンの衝突を防ぐためにform外へ -->
-    <!-- <button type="button" onclick="GenerateFormsURL()">FormsURL 自動作成</button><br> -->
-    <!-- <input type="text" id="FormURL" readonly><br> -->
-
     <script>
-
         // カメラ起動 バーコード読み取り
         const codeReader = new ZXing.BrowserMultiFormatReader();
 
@@ -61,31 +55,6 @@
                 }
             });
         });
-
-        // 事前入力済みFormsURL自動生成
-        function GenerateFormsURL(){
-            
-            // 抽出した商品コードを格納
-            const JanCode = document.getElementById('barcode').value.trim();
-
-            // JANコード NULLチェック
-            if (!JanCode){
-                document.getElementById('FormURL').value = "JANコードが空です";
-                return;
-            }
-
-            // ベースURL・質問ID・抽出した商品コード・エンコード後の商品コードを取得
-            const BaseURL = "https://forms.office.com/Pages/ResponsePage.aspx?id=OEtMPzPYtUem4Ic11TlGaIfYkjmu2fFBotYoTh_Pz2JURUMyQjJHMks1Nk5RTEFCVVNLTVhMS1FHVS4u";
-            const QuestionId = "rcb527b911d8541b6bd298ba5d0438b68";
-            const JsonValue = JSON.stringify([JanCode]);
-            const Encoded = encodeURIComponent(JsonValue);
-
-            // 事前入力済みのForms URLを作成
-            const FullURL = `${BaseURL}&${QuestionId}=${Encoded}`;
-
-            // FormsURLに値を格納
-            document.getElementById('FormURL').value = FullURL;
-        }
     </script>
 </body>
 </html>
